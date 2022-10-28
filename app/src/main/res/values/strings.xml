@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">For_Assignment</string>
+    <string name="trip">Trip Management</string>
+    <string name="name_trip">Name Trip*</string>
+    <string name="destination">Destination*</string>
+    <string name="doT">Date of the Trip*</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="require">Required Risk Assessment*</string>
+    <string name="description">Description</string>
+    <string name="add_button">Add to Database</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
