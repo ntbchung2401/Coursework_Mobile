@@ -14,7 +14,7 @@
         android:theme="@style/Theme.For_Assignment"
         tools:targetApi="31" >
         <activity
-            android:name=".AddTripActivity"
+            android:name=".trip.AddTripActivity"
             android:label="Add Trip"
             android:parentActivityName=".MainActivity"/>
         <activity

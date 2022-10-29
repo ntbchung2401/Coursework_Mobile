@@ -33,7 +33,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addTrip( String nameTrip, String destination,String date, String require, String description){
+    public void addTrip(String nameTrip, String destination, String date, String require, String description){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("nameTrip", nameTrip);
@@ -48,13 +48,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Successfully to Add", Toast.LENGTH_SHORT).show();
         }
     }
-    public Cursor showAllTrip(){
-        String query ="SELECT * FROM "+ TABLE_TRIP;
-        SQLiteDatabase db = this.getWritableDatabase();
+    Cursor readAllData(){
+        String query = "SELECT * FROM "+ TABLE_TRIP;
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
-        if(db != null){
+        if(db!= null){
             cursor = db.rawQuery(query,null);
         }
         return cursor;
     }
+
 }
