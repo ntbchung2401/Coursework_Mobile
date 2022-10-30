@@ -15,7 +15,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_TRIP = "my_trip";
     public static final String TABLE_EXPENSES = "trip_expenses";
 
-    public MyDatabaseHelper(@Nullable Context context) {
+    MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
         this.context= context;
     }
@@ -57,5 +57,32 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
-
+    public void updateTripData(String row_id, String name,String destination, String date, String require, String description){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("nameTrip", name);
+        cv.put("destination", destination);
+        cv.put("date", date);
+        cv.put("require", require);
+        cv.put("description", description);
+        long result = db.update(TABLE_TRIP, cv, "trip_id=?",new String[]{row_id});
+        if(result == -1){
+            Toast.makeText(context, "Failed to Update.", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "Successfully to Update", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void deleteATrip(String row_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_TRIP, "trip_id=?", new String[]{row_id});
+        if(result == -1){
+            Toast.makeText(context,"Delete Fail",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context,"Successfully Delete",Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void deleteAllTrip(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_TRIP);
+    }
 }

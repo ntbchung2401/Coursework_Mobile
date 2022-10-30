@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".AddTripActivity">
 
+
     <TextView
         android:id="@+id/viewNameTrip"
         android:layout_width="wrap_content"
@@ -19,12 +20,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="200dp"
         />
 
     <EditText
-        android:id="@+id/inputNameTrip"
+        android:id="@+id/inputNameTrip2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -47,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10sp"
         android:layout_marginEnd="200dp"
         android:text="@string/destination"
 
@@ -55,14 +56,14 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/inputDestination"
+        app:layout_constraintBottom_toTopOf="@+id/inputDestination2"
         app:layout_constraintHorizontal_bias="0.055"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputNameTrip"
+        app:layout_constraintTop_toBottomOf="@+id/inputNameTrip2"
         />
 
     <EditText
-        android:id="@+id/inputDestination"
+        android:id="@+id/inputDestination2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -83,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="10sp"
         android:layout_marginEnd="200dp"
         android:text="@string/doT"
 
@@ -94,13 +95,13 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@+id/inputDestination" />
+        app:layout_constraintTop_toBottomOf="@+id/inputDestination2" />
 
     <EditText
-        android:id="@+id/inputDoT"
+        android:id="@+id/inputDoT2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="48dp"
         android:ems="16"
         android:hint="@string/doT"
@@ -114,7 +115,7 @@
         android:id="@+id/button_date"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:drawableLeft="@drawable/calendar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +129,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="200dp"
         android:text="@string/require"
         android:textColor="@color/red"
@@ -168,12 +169,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="200dp"
         android:text="@string/description"
 
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.055"
@@ -182,7 +183,7 @@
         />
 
     <EditText
-        android:id="@+id/inputDescription"
+        android:id="@+id/inputDescription2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -196,18 +197,49 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/viewDescription"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
     <Button
-        android:id="@+id/add_Trip"
+        android:id="@+id/update_trip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_button"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="60dp"
+        android:text="@string/update_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputDescription"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/inputDescription2" />
+
+    <Button
+        android:id="@+id/delete_trip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="3sp"
+        android:layout_marginEnd="60dp"
+        android:text="@string/delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/update_trip"
+        app:layout_constraintVertical_bias="0.0" />
+    <Button
+        android:id="@+id/show_expense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="60dp"
+        android:text="Show Expense"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/delete_trip"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
