@@ -25,11 +25,11 @@ import java.util.Calendar;
 
 public class UpdateTripActivity extends AppCompatActivity {
     private EditText name_input, destination_input, date_input, require_input, description_input;
-    private Button update_button, button_date,delete_trip;
+    private Button update_button, button_date,delete_trip, show_expense;
     private RadioGroup radioGroup;
     private RadioButton radio_yes;
     private RadioButton radio_no;
-    String id,name,destination,date, require, description;
+    String trip_id,name,destination,date, require, description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +38,15 @@ public class UpdateTripActivity extends AppCompatActivity {
 
         button_date = findViewById(R.id.button_date);
         delete_trip = findViewById(R.id.delete_trip);
+//        Intent intentX = getIntent();
+//        int tripID = Integer.parseInt(intentX.getStringExtra("trip_id"));
+        show_expense = findViewById(R.id.show_expense);
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
         button_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,6 +63,7 @@ public class UpdateTripActivity extends AppCompatActivity {
             }
         });
 
+
         name_input = findViewById(R.id.inputNameTrip2);
         destination_input = findViewById(R.id.inputDestination2);
         date_input = findViewById(R.id.inputDoT2);
@@ -68,9 +73,7 @@ public class UpdateTripActivity extends AppCompatActivity {
         radio_yes = findViewById(R.id.radio_yes);
         radio_no = findViewById(R.id.radio_no);
 
-
         getAndSetIntentData();
-
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
             ab.setTitle(name);
@@ -88,7 +91,7 @@ public class UpdateTripActivity extends AppCompatActivity {
 
                 require = radioGroup.getText().toString().trim();
                 description = description_input.getText().toString().trim();
-                myDB.updateTripData(id,name,destination,date,require,description);
+                myDB.updateTripData(trip_id,name,destination,date,require,description);
                 startActivity(putIntent);
             }
         });
@@ -98,11 +101,21 @@ public class UpdateTripActivity extends AppCompatActivity {
                 confirmDialog();
             }
         });
+
+        show_expense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentE = new Intent(UpdateTripActivity.this, ExpenseActivity.class);
+                intentE.putExtra("tripID", String.valueOf(trip_id));
+                startActivity(intentE);
+            }
+        });
+
     }
     void getAndSetIntentData(){
         if(getIntent().hasExtra("id") && getIntent().hasExtra("name") &&getIntent().hasExtra("destination") &&getIntent().hasExtra("date") &&getIntent().hasExtra("require") &&getIntent().hasExtra("description")){
             //getting
-            id = getIntent().getStringExtra("id");
+            trip_id = getIntent().getStringExtra("id");
             name = getIntent().getStringExtra("name");
             destination = getIntent().getStringExtra("destination");
             date = getIntent().getStringExtra("date");
@@ -129,6 +142,7 @@ public class UpdateTripActivity extends AppCompatActivity {
         }
     }
 
+
     void confirmDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete "+ name +" ?");
@@ -137,7 +151,7 @@ public class UpdateTripActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateTripActivity.this);
-                myDB.deleteATrip(id);
+                myDB.deleteATrip(trip_id);
                 finish();
             }
         });

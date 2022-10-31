@@ -14,6 +14,18 @@
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="upload">Upload</string>
+    <string name="type">Type</string>
+    <string name="travel">Travel</string>
+    <string name="food">Food</string>
+    <string name="amount">Amount</string>
+    <string name="transport">Transport</string>
+    <string name="time">Time of the Expense</string>
+    <string-array name="type_expenses">
+        <item>Choose</item>
+        <item>Food</item>
+        <item>Transport</item>
+        <item>Travel</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
