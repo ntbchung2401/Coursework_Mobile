@@ -27,9 +27,6 @@
             android:label="Expense Details"
             android:parentActivityName=".UpdateTripActivity" />
         <activity
-            android:name=".SearchActivity"
-            android:exported="false" />
-        <activity
             android:name=".UpdateTripActivity"
             android:parentActivityName=".MainActivity" />
         <activity

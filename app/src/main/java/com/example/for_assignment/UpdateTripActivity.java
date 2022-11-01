@@ -10,6 +10,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +26,7 @@ import java.util.Calendar;
 
 public class UpdateTripActivity extends AppCompatActivity {
     private EditText name_input, destination_input, date_input, require_input, description_input;
-    private Button update_button, button_date,delete_trip, show_expense;
+    private Button update_button, button_date, show_expense;
     private RadioGroup radioGroup;
     private RadioButton radio_yes;
     private RadioButton radio_no;
@@ -37,7 +38,6 @@ public class UpdateTripActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_trip);
 
         button_date = findViewById(R.id.button_date);
-        delete_trip = findViewById(R.id.delete_trip);
 //        Intent intentX = getIntent();
 //        int tripID = Integer.parseInt(intentX.getStringExtra("trip_id"));
         show_expense = findViewById(R.id.show_expense);
@@ -91,17 +91,20 @@ public class UpdateTripActivity extends AppCompatActivity {
 
                 require = radioGroup.getText().toString().trim();
                 description = description_input.getText().toString().trim();
+                if(TextUtils.isEmpty(name_input.getText().toString())){
+                    name_input.setError("Fill can't be empty");
+                    return;
+                }else if(TextUtils.isEmpty(destination_input.getText().toString())){
+                    destination_input.setError("Fill can't be empty");
+                    return;
+                }else if(TextUtils.isEmpty(date_input.getText().toString())){
+                    date_input.setError("Fill can't be empty");
+                    return;
+                }
                 myDB.updateTripData(trip_id,name,destination,date,require,description);
                 startActivity(putIntent);
             }
         });
-        delete_trip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmDialog();
-            }
-        });
-
         show_expense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,7 +144,19 @@ public class UpdateTripActivity extends AppCompatActivity {
             Toast.makeText(this,"No Data.", Toast.LENGTH_SHORT).show();
         }
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.delete) {
+            confirmDialog();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     void confirmDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

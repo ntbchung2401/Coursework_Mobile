@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,22 +16,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> {
+public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> implements Filterable{
     private Context context;
-    Activity activity;
+    private Activity activity;
+     private List<Trip> trips = new ArrayList<>();
+    private List<Trip> tripFind;
     private ArrayList trip_id, nameTrip, destination, date, require, description;
 
-    TripAdapter(Activity activity, Context context, ArrayList trip_id, ArrayList nameTrip, ArrayList destination,
-                ArrayList date, ArrayList require, ArrayList description){
+    TripAdapter(Activity activity, Context context, List<Trip> trips){
         this.activity = activity;
         this.context = context;
-        this.trip_id = trip_id;
-        this.nameTrip = nameTrip;
-        this.destination = destination;
-        this.date = date;
-        this.require = require;
-        this.description = description;
+        this.trips = trips;
+        this.tripFind = trips;
     }
     @NonNull
     @Override
@@ -41,22 +41,23 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
-        holder.trip_id_txt.setText(String.valueOf(trip_id.get(position)));
-        holder.nameTrip_txt.setText(String.valueOf(nameTrip.get(position)));
-        holder.destination_txt.setText(String.valueOf(destination.get(position)));
-        holder.date_txt.setText(String.valueOf(date.get(position)));
-        holder.require_txt.setText(String.valueOf(require.get(position)));
-        holder.description_txt.setText(String.valueOf(description.get(position)));
+        Trip trip = trips.get(position);
+        holder.trip_id_txt.setText(String.valueOf(trip.getId()));
+        holder.nameTrip_txt.setText(String.valueOf(trip.getName()));
+        holder.destination_txt.setText(String.valueOf(trip.getDestination()));
+        holder.date_txt.setText(String.valueOf(trip.getDate()));
+        holder.require_txt.setText(String.valueOf(trip.getRequire()));
+        holder.description_txt.setText(String.valueOf(trip.getDescription()));
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, UpdateTripActivity.class);
-                intent.putExtra("id", String.valueOf(trip_id.get(position)));
-                intent.putExtra("name", String.valueOf(nameTrip.get(position)));
-                intent.putExtra("destination", String.valueOf(destination.get(position)));
-                intent.putExtra("date", String.valueOf(date.get(position)));
-                intent.putExtra("require", String.valueOf(require.get(position)));
-                intent.putExtra("description", String.valueOf(description.get(position)));
+                intent.putExtra("id", String.valueOf(trip.getId()));
+                intent.putExtra("name", String.valueOf(trip.getName()));
+                intent.putExtra("destination", String.valueOf(trip.getDestination()));
+                intent.putExtra("date", String.valueOf(trip.getDate()));
+                intent.putExtra("require", String.valueOf(trip.getRequire()));
+                intent.putExtra("description", String.valueOf(trip.getDescription()));
                 activity.startActivityForResult(intent,1);
             }
         });
@@ -64,8 +65,9 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return trip_id.size();
+        return trips.size();
     }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView trip_id_txt, nameTrip_txt, destination_txt, date_txt, require_txt, description_txt;
@@ -80,5 +82,34 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.MyViewHolder> 
             description_txt = itemView.findViewById(R.id.description_txt);
             mainLayout = itemView.findViewById(R.id.mainLayout);
         }
+    }
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String strSearch = constraint.toString();
+                if(strSearch.isEmpty()){
+                    trips = tripFind;
+                }else {
+                    List<Trip> list = new ArrayList<>();
+                    for(Trip trip:tripFind){
+                        if(trip.getName().toLowerCase().contains(strSearch.toLowerCase())){
+                            list.add(trip);
+                        }
+                    }
+                    trips = list;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = trips;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                trips = (List<Trip>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }

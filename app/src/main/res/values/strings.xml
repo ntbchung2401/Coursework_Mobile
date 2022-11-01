@@ -21,7 +21,6 @@
     <string name="transport">Transport</string>
     <string name="time">Time of the Expense</string>
     <string-array name="type_expenses">
-        <item>Choose</item>
         <item>Food</item>
         <item>Transport</item>
         <item>Travel</item>

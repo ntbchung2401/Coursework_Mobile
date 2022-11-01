@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -61,6 +63,7 @@ public class AddTripActivity extends AppCompatActivity {
         add_Trip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MyDatabaseHelper myDB = new MyDatabaseHelper(AddTripActivity.this);
                 int requireGroup = radioGroup.getCheckedRadioButtonId();
                 RadioButton radioGroup = findViewById(requireGroup);
                 String nameTrip = inputNameTrip.getText().toString().trim();
@@ -68,7 +71,16 @@ public class AddTripActivity extends AppCompatActivity {
                 String date = inputDoT.getText().toString().trim();
                 String strRequire = radioGroup.getText().toString().trim();
                 String description = inputDescription.getText().toString().trim();
-                MyDatabaseHelper myDB = new MyDatabaseHelper(AddTripActivity.this);
+                if(TextUtils.isEmpty(inputNameTrip.getText().toString())){
+                    inputNameTrip.setError("Fill can't be empty");
+                    return;
+                }else if(TextUtils.isEmpty(inputDestination.getText().toString())){
+                    inputDestination.setError("Fill can't be empty");
+                    return;
+                }else if(TextUtils.isEmpty(inputDoT.getText().toString())){
+                    inputDoT.setError("Fill can't be empty");
+                    return;
+                }
                 myDB.addTrip(nameTrip,destination,date,strRequire,description);
                 startActivity(putIntent);
             }

@@ -114,4 +114,17 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
+    public void updateExpenseData(String expenses_id, String type, String amount, String time, int tripID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("type", type);
+        cv.put("amount", amount);
+        cv.put("time", time);
+        long result = db.update(TABLE_EXPENSE, cv, "expenses_id=? and trip_id=?",new String[]{expenses_id, String.valueOf(tripID)});
+        if(result == -1){
+            Toast.makeText(context, "Failed to Update.", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "Successfully to Update", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

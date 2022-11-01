@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -54,7 +55,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         spinner_type.setAdapter(adapter);
 
         Intent intent = getIntent();
-        int trip_id = Integer.parseInt(intent.getStringExtra("trip_id"));
+        int trip_id = Integer.parseInt(intent.getStringExtra("tripID"));
 
 
         button_addExpense = findViewById(R.id.button_addExpense);
@@ -66,6 +67,13 @@ public class AddExpenseActivity extends AppCompatActivity {
                 double amount = Double.parseDouble(inputAmount.getText().toString().trim());
                 String time = inputDoT.getText().toString().trim();
                 MyDatabaseHelper myDB = new MyDatabaseHelper(AddExpenseActivity.this);
+                if(TextUtils.isEmpty(inputAmount.getText().toString())){
+                    inputAmount.setError("Fill can't be empty");
+                    return;
+                }else if(TextUtils.isEmpty(inputDoT.getText().toString())){
+                    inputDoT.setError("Fill can't be empty");
+                    return;
+                }
                 myDB.addExpenses(type,amount,time, trip_id);
                 intentPut.putExtra("tripID", String.valueOf(trip_id));
                 startActivity(intentPut);

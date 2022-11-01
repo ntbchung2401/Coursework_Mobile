@@ -3,10 +3,14 @@ package com.example.for_assignment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,13 +25,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    FloatingActionButton add_button;
+    FloatingActionButton add_button, delete_button;
     MyDatabaseHelper myDB;
-    ArrayList<String> trip_id, nameTrip, destination, date, require, description;
+    List<Trip> tripList = new ArrayList<>();
     TripAdapter tripAdapter;
 
     @Override
@@ -39,14 +44,9 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.action_home:
                         Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_search:
-                        Intent i = new Intent(MainActivity.this, SearchActivity.class);
-                        startActivity(i);
-                        Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_upload:
                         Toast.makeText(MainActivity.this, "Upload", Toast.LENGTH_SHORT).show();
@@ -57,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView = findViewById(R.id.recycleView);
         add_button = findViewById(R.id.add_button);
+
+        myDB = new MyDatabaseHelper(MainActivity.this);
+        storeDataInArrays();
+
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,20 +68,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        delete_button = findViewById(R.id.delete_button);
+        delete_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmDialog();
+            }
+        });
 
-        myDB = new MyDatabaseHelper(MainActivity.this);
-        trip_id = new ArrayList<>();
-        nameTrip = new ArrayList<>();
-        destination = new ArrayList<>();
-        date = new ArrayList<>();
-        require = new ArrayList<>();
-        description = new ArrayList<>();
-
-        storeDataInArrays();
-
-        tripAdapter = new TripAdapter(MainActivity.this, this, trip_id, nameTrip, destination, date, require, description);
+        tripAdapter = new TripAdapter(MainActivity.this, this, tripList);
         recyclerView.setAdapter(tripAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
     }
 
     @Override
@@ -94,17 +98,19 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
-                trip_id.add(cursor.getString(0));
-                nameTrip.add(cursor.getString(1));
-                destination.add(cursor.getString(2));
-                date.add(cursor.getString(3));
-                require.add(cursor.getString(4));
-                description.add(cursor.getString(5));
+                tripList.add(new Trip(Integer.parseInt(
+                        cursor.getString(0)),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5)
+                ));
             }
         }
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.my_menu, menu);
@@ -113,12 +119,38 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.delete_all) {
+        if (item.getItemId() == R.id.delete) {
             Toast.makeText(this, "Delete All", Toast.LENGTH_SHORT).show();
             confirmDialog();
         }
         return super.onOptionsItemSelected(item);
+    }*/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                tripAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                tripAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
     }
+
+
 
     void confirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

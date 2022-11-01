@@ -1,6 +1,7 @@
 package com.example.for_assignment;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ public class ExpenseActivity extends AppCompatActivity {
     ArrayList<String> expenses_id, expenses_type,expenses_amount, expenses_time;
     ExpenseAdapter expenseAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +36,7 @@ public class ExpenseActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ExpenseActivity.this, AddExpenseActivity.class);
-                intent.putExtra("trip_id", String.valueOf(tripID));
+                intent.putExtra("tripID", String.valueOf(tripID));
                 startActivity(intent);
             }
         });
@@ -46,9 +48,11 @@ public class ExpenseActivity extends AppCompatActivity {
         expenses_time = new ArrayList<>();
         storeDataInArray(tripID);
 
-        expenseAdapter = new ExpenseAdapter(ExpenseActivity.this,expenses_id, expenses_type,expenses_amount,expenses_time,tripID);
+        expenseAdapter = new ExpenseAdapter(ExpenseActivity.this,this,expenses_id, expenses_type,expenses_amount,expenses_time,tripID);
         recyclerView.setAdapter(expenseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(ExpenseActivity.this));
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(itemDecoration);
     }
 
     void storeDataInArray(int tripID){

@@ -6,25 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".AddExpenseActivity">
 
-    <EditText
-        android:id="@+id/inputAmount"
-        android:layout_width="295dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="30dp"
-        android:drawableLeft="@drawable/ic_money"
-        android:drawablePadding="10dp"
-        android:ems="30"
-        android:hint="@string/amount"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/DoT_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.371"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/amountView" />
+
 
     <TextView
         android:id="@+id/typeView"
@@ -55,6 +37,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeView"
         tools:ignore="SpeakableTextPresentCheck"/>
+
+
+
+    <TextView
+        android:id="@+id/amountView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="303dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/amount"
+        android:textColor="@color/red"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/inputAmount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_type"
+        tools:ignore="MissingConstraints" />
+    <EditText
+        android:id="@+id/inputAmount"
+        android:layout_width="295dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="30dp"
+        android:drawableLeft="@drawable/ic_money"
+        android:drawablePadding="10dp"
+        android:ems="30"
+        android:hint="@string/amount"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/DoT_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.371"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/amountView" />
 
     <TextView
         android:id="@+id/DoT_text"
@@ -100,24 +120,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DoT_text"
         tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/amountView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginEnd="303dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/amount"
-        android:textColor="@color/red"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/inputAmount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_type"
-        tools:ignore="MissingConstraints" />
-
     <Button
         android:id="@+id/button_addExpense"
         android:layout_width="wrap_content"
