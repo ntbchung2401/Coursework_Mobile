@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -71,12 +72,25 @@ public class UpdateExpenseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateExpenseActivity.this);
                 Intent intent = new Intent(UpdateExpenseActivity.this, ExpenseActivity.class);
-                intent.putExtra("tripID",String.valueOf(tripID));
-                type = spinner_type2.getSelectedItem().toString().trim();
-                amount = amount_expenses.getText().toString().trim();
-                time = inputDoT2.getText().toString().trim();
-                myDB.updateExpenseData(expenses_id,type,amount,time, tripID);
-                startActivity(intent);
+                if(amount_expenses.length()==0){
+                    Toast.makeText(UpdateExpenseActivity.this, "Input Amount can't be empty", Toast.LENGTH_SHORT).show();
+                }else if(inputDoT2.length()==0){
+                    Toast.makeText(UpdateExpenseActivity.this, "Input Amount can't be empty", Toast.LENGTH_SHORT).show();
+                }else {
+                    intent.putExtra("tripID", String.valueOf(tripID));
+                    type = spinner_type2.getSelectedItem().toString().trim();
+                    amount = amount_expenses.getText().toString().trim();
+                    time = inputDoT2.getText().toString().trim();
+                /*if(TextUtils.isEmpty(amount_expenses.getText().toString())){
+                    amount_expenses.setError("Fill can't be empty");
+                    return;
+                }else if(TextUtils.isEmpty(inputDoT2.getText().toString())){
+                    inputDoT2.setError("Fill can't be empty");
+                    return;
+                }*/
+                    myDB.updateExpenseData(expenses_id, type, amount, time, tripID);
+                    startActivity(intent);
+                }
             }
         });
 

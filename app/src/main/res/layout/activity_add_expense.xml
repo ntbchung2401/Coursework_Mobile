@@ -5,9 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddExpenseActivity">
-
-
-
     <TextView
         android:id="@+id/typeView"
         android:layout_width="wrap_content"
@@ -17,7 +14,7 @@
         android:layout_marginEnd="330dp"
         android:layout_marginBottom="10dp"
         android:text="@string/type"
-        android:textColor="@color/red"
+        android:textColor="@color/colorText"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/spinner_type"
@@ -37,9 +34,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeView"
         tools:ignore="SpeakableTextPresentCheck"/>
-
-
-
     <TextView
         android:id="@+id/amountView"
         android:layout_width="wrap_content"
@@ -48,7 +42,7 @@
         android:layout_marginEnd="303dp"
         android:layout_marginBottom="10dp"
         android:text="@string/amount"
-        android:textColor="@color/red"
+        android:textColor="@color/colorText"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/inputAmount"
@@ -67,8 +61,10 @@
         android:drawableLeft="@drawable/ic_money"
         android:drawablePadding="10dp"
         android:ems="30"
+        android:paddingLeft="10dp"
+        android:background="@drawable/edittext_desigb"
         android:hint="@string/amount"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/DoT_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +81,7 @@
         android:layout_marginEnd="189dp"
         android:layout_marginBottom="10dp"
         android:text="@string/time"
-        android:textColor="@color/red"
+        android:textColor="@color/colorText"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/inputDoT"
@@ -101,8 +97,11 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="48dp"
         android:ems="16"
+        android:paddingLeft="10dp"
         android:hint="@string/time"
         android:minHeight="48dp"
+        android:inputType="date"
+        android:background="@drawable/edittext_desigb"
         android:textColor="@color/black"
         android:textSize="18dp"
         app:layout_constraintRight_toRightOf="@id/button_date"
@@ -114,6 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:background="@drawable/button_design"
         android:drawableLeft="@drawable/calendar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.982"
@@ -127,6 +127,10 @@
         android:layout_marginStart="130dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="107dp"
+        android:background="@drawable/button_design"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="23sp"
         android:text="@string/add_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

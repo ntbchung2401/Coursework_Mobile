@@ -2,7 +2,9 @@ package com.example.for_assignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,6 +25,7 @@ public class AddTripActivity extends AppCompatActivity {
     private RadioButton radio_yes;
     private RadioButton radio_no;
     private EditText inputNameTrip, inputDestination, inputDescription,inputDoT;
+    String nameTrip, destination,date, riskrequirement, description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +46,11 @@ public class AddTripActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                                month = month+1;
-                                String date = day+"/"+month+"/"+year;
+                                month = month + 1;
+                                String date = day + "/" + month + "/" + year;
                                 inputDoT.setText(date);
                             }
-                 },year, month,day);
+                        }, year, month, day);
                 datePickerDialog.show();
             }
         });
@@ -71,18 +74,30 @@ public class AddTripActivity extends AppCompatActivity {
                 String date = inputDoT.getText().toString().trim();
                 String strRequire = radioGroup.getText().toString().trim();
                 String description = inputDescription.getText().toString().trim();
-                if(TextUtils.isEmpty(inputNameTrip.getText().toString())){
+                if (TextUtils.isEmpty(inputNameTrip.getText().toString())) {
                     inputNameTrip.setError("Fill can't be empty");
                     return;
-                }else if(TextUtils.isEmpty(inputDestination.getText().toString())){
+                } else if (TextUtils.isEmpty(inputDestination.getText().toString())) {
                     inputDestination.setError("Fill can't be empty");
                     return;
-                }else if(TextUtils.isEmpty(inputDoT.getText().toString())){
+                } else if (TextUtils.isEmpty(inputDoT.getText().toString())) {
                     inputDoT.setError("Fill can't be empty");
                     return;
                 }
-                myDB.addTrip(nameTrip,destination,date,strRequire,description);
-                startActivity(putIntent);
+                new AlertDialog.Builder(AddTripActivity.this)
+                        .setTitle("Details entered")
+                        .setMessage("Name trip:" + nameTrip
+                                + "\n" + "Destination: " + destination
+                                + "\n" + "Date: " + date
+                                + "\n" + "Risk requirement: " + strRequire
+                                + "\n" + "Description: " + description
+                        ).setNeutralButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                myDB.addTrip(nameTrip, destination, date, strRequire, description);
+                                startActivity(putIntent);
+                            }
+                        }).show();
             }
         });
     }

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -53,30 +54,34 @@ public class AddExpenseActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_expenses, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         spinner_type.setAdapter(adapter);
-
         Intent intent = getIntent();
         int trip_id = Integer.parseInt(intent.getStringExtra("tripID"));
-
-
         button_addExpense = findViewById(R.id.button_addExpense);
         button_addExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentPut = new Intent(AddExpenseActivity.this, ExpenseActivity.class);
-                String type = spinner_type.getSelectedItem().toString().trim();
-                double amount = Double.parseDouble(inputAmount.getText().toString().trim());
-                String time = inputDoT.getText().toString().trim();
                 MyDatabaseHelper myDB = new MyDatabaseHelper(AddExpenseActivity.this);
-                if(TextUtils.isEmpty(inputAmount.getText().toString())){
+                if(inputAmount.length()==0){
+                    Toast.makeText(AddExpenseActivity.this, "Input Amount can't be empty", Toast.LENGTH_SHORT).show();
+                }else if(inputDoT.length()==0){
+                    Toast.makeText(AddExpenseActivity.this, "Input Amount can't be empty", Toast.LENGTH_SHORT).show();
+                }else{
+                    intentPut.putExtra("tripID", String.valueOf(trip_id));
+                    String type = spinner_type.getSelectedItem().toString().trim();
+                    double amount = Double.parseDouble(inputAmount.getText().toString().trim());
+                    String time = inputDoT.getText().toString().trim();
+                    myDB.addExpenses(type,amount,time, trip_id);
+                    startActivity(intentPut);
+                }
+                /*if(TextUtils.isEmpty(inputAmount.getText().toString())){
                     inputAmount.setError("Fill can't be empty");
                     return;
                 }else if(TextUtils.isEmpty(inputDoT.getText().toString())){
                     inputDoT.setError("Fill can't be empty");
                     return;
-                }
-                myDB.addExpenses(type,amount,time, trip_id);
-                intentPut.putExtra("tripID", String.valueOf(trip_id));
-                startActivity(intentPut);
+                }*/
+
             }
         });
     }
