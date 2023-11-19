@@ -31,12 +31,12 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddTripActivity"
-            android:label="Add Trip"
+            android:label="Add Hike"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="Trip Management">
+            android:label="Hike App Management">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

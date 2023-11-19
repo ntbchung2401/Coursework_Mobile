@@ -85,8 +85,9 @@ public class AddTripActivity extends AppCompatActivity {
                     return;
                 }
                 new AlertDialog.Builder(AddTripActivity.this)
-                        .setTitle("Details entered")
-                        .setMessage("Name trip:" + nameTrip
+                        .setTitle("ConFirmation!!!")
+                        .setMessage("New Hike will be added!"+ "\n"
+                                + "Name trip:" + nameTrip
                                 + "\n" + "Destination: " + destination
                                 + "\n" + "Date: " + date
                                 + "\n" + "Risk requirement: " + strRequire

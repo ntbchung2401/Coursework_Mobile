@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">For_Assignment</string>
-    <string name="trip">Trip Management</string>
-    <string name="name_trip">Name Trip*</string>
+    <string name="trip">Hike App Management</string>
+    <string name="name_trip"> Hike Name*</string>
     <string name="destination">Destination*</string>
-    <string name="doT">Date of the Trip*</string>
+    <string name="doT">Date of Hike*</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="require">Required Risk Assessment*</string>
+    <string name="require">Parking Available*</string>
     <string name="description">Description</string>
     <string name="add_button">Add to Database</string>
     <string name="update_button">Update</string>

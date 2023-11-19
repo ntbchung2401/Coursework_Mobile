@@ -99,17 +99,17 @@
 
     <EditText
         android:id="@+id/inputDoT"
-        android:layout_width="322dp"
-        android:layout_height="wrap_content"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="48dp"
-        android:paddingLeft="10dp"
+        android:background="@drawable/edittext_desigb"
         android:ems="16"
         android:hint="@string/doT"
         android:minHeight="48dp"
+        android:paddingLeft="10dp"
         android:textColor="@color/black"
         android:textSize="18dp"
-        android:background="@drawable/edittext_desigb"
         app:layout_constraintRight_toRightOf="@id/button_date"
         app:layout_constraintTop_toBottomOf="@+id/DoT_text" />
 
